@@ -115,7 +115,7 @@ pub fn derive_rustsbi(input: TokenStream) -> TokenStream {
                 Ok(())
             } else {
                 let path = meta.path.to_token_stream().to_string().replace(' ', "");
-                Err(meta.error(format_args!("unknown RustSBI struct attribute `{}`", path)))
+                Err(meta.error(format_args!("unknown RustSBI struct attribute `{path}`")))
             }
         });
         if let Err(err) = parsed {
@@ -166,7 +166,7 @@ pub fn derive_rustsbi(input: TokenStream) -> TokenStream {
                     Ok(())
                 } else {
                     let path = meta.path.to_token_stream().to_string().replace(' ', "");
-                    Err(meta.error(format_args!("unknown RustSBI variant attribute `{}`", path)))
+                    Err(meta.error(format_args!("unknown RustSBI variant attribute `{path}`")))
                 }
             });
             if let Err(err) = parsed {
@@ -221,10 +221,9 @@ fn check_already_exists(
         let error = syn::Error::new_spanned(
             field,
             format!(
-                "more than one field defined SBI extension '{}'. \
+                "more than one field defined SBI extension '{extension_name}'. \
                 At most one fields should define the same SBI extension; consider using \
-                #[rustsbi(skip)] to ignore fields that shouldn't be treated as an extension.",
-                extension_name
+                #[rustsbi(skip)] to ignore fields that shouldn't be treated as an extension."
             ),
         );
         ans.extend(TokenStream::from(error.to_compile_error()));

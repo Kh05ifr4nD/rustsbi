@@ -1,9 +1,11 @@
 # Cargo build path and library exclusions
-/target
+/target/
 Cargo.lock
-
 # IntelliJ IDEA directory
-/.idea
-
+/.idea/
 # Mac OS X hidden files
 .DS_Store
+# Nix
+/.direnv/
+/.pre-commit-config.yaml
+result*

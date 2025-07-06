@@ -182,7 +182,7 @@ impl_sbi_register!(i128, i128);
 impl<T: SbiRegister + core::fmt::LowerHex> core::fmt::Debug for SbiRet<T> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match T::into_result(*self) {
-            Ok(value) => write!(f, "{:?}", value),
+            Ok(value) => write!(f, "{value:?}"),
             Err(err) => match err {
                 Error::Failed => write!(f, "<SBI call failed>"),
                 Error::NotSupported => write!(f, "<SBI feature not supported>"),
@@ -198,7 +198,7 @@ impl<T: SbiRegister + core::fmt::LowerHex> core::fmt::Debug for SbiRet<T> {
                 Error::Timeout => write!(f, "<SBI timeout>"),
                 Error::Io => write!(f, "<SBI input/output error>"),
                 Error::DeniedLocked => write!(f, "<SBI denied due to locked status>"),
-                Error::Custom(unknown) => write!(f, "[SBI Unknown error: {:#x}]", unknown),
+                Error::Custom(unknown) => write!(f, "[SBI Unknown error: {unknown:#x}]"),
             },
         }
     }
