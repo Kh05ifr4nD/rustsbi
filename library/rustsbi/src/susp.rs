@@ -8,12 +8,12 @@ use sbi_spec::binary::SbiRet;
 /// identifiers (`sleep_type`). The possible values for the identifiers are shown
 /// in the table below:
 ///
-/// | Type                    | Name           | Description    
+/// | Type                    | Name           | Description
 /// |-------------------------|----------------|-------------------------------
 /// | 0                       | SUSPEND_TO_RAM | This is a "suspend to RAM" sleep type, similar to ACPI’s S2 or S3. Entry requires all but the calling hart be in the HSM `STOPPED` state and all hart registers and CSRs saved to RAM.
 /// | 0x00000001 - 0x7fffffff |                | Reserved for future use
 /// | 0x80000000 - 0xffffffff |                | Platform-specific system sleep types
-/// | > 0xffffffff            |                | Reserved                
+/// | > 0xffffffff            |                | Reserved
 ///
 /// The term "system" refers to the world-view of supervisor software. The
 /// underlying SBI implementation may be provided by machine mode firmware or a
@@ -34,11 +34,11 @@ pub trait Susp {
     /// To resume, the hart will jump to supervisor-mode, at the address specified by `resume_addr`,
     /// with the specific register values described in the table below.
     ///
-    /// | Register Name                                     | Register Value     
+    /// | Register Name                                     | Register Value
     /// | ------------------------------------------------- | ------------------
-    /// | satp                                              | 0                  
-    /// | sstatus.SIE                                       | 0                  
-    /// | a0                                                | hartid             
+    /// | satp                                              | 0
+    /// | sstatus.SIE                                       | 0
+    /// | a0                                                | hartid
     /// | a1                                                | `opaque` parameter
     /// All other registers remain in an undefined state.
     ///
@@ -72,7 +72,7 @@ pub trait Susp {
     ///
     /// The possible return error codes returned in `SbiRet.error` are shown in the table below:
     ///
-    /// | Error code                  | Description  
+    /// | Error code                  | Description
     /// | --------------------------- | -------------------
     /// | `SbiRet::success()`         | System has been suspended and resumed successfully.
     /// | `SbiRet::invalid_param()`   | `sleep_type` is reserved or is platform-specific and unimplemented.

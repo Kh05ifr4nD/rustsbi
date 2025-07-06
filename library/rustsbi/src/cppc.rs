@@ -19,10 +19,10 @@ use sbi_spec::binary::SbiRet;
 /// The second half provides the information not defined in the ACPI specification,
 /// but is additionally required by the supervisor-mode power-management software.
 ///
-/// | Register ID             | Register                              | Bit Width | Attribute    | Description               
+/// | Register ID             | Register                              | Bit Width | Attribute    | Description
 /// | ----------------------- | ------------------------------------- | --------- | ------------ | ---------------------------
-/// | 0x00000000              | HighestPerformance                    | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.1  
-/// | 0x00000001              | NominalPerformance                    | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.2   
+/// | 0x00000000              | HighestPerformance                    | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.1
+/// | 0x00000001              | NominalPerformance                    | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.2
 /// | 0x00000002              | LowestNonlinearPerformance            | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.4
 /// | 0x00000003              | LowestPerformance                     | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.5
 /// | 0x00000004              | GuaranteedPerformanceRegister         | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.6
@@ -38,13 +38,13 @@ use sbi_spec::binary::SbiRet;
 /// | 0x0000000E              | CPPCEnableRegister                    | 32        | Read / Write | ACPI Spec 6.5: 8.4.6.1.4
 /// | 0x0000000F              | AutonomousSelectionEnable             | 32        | Read / Write | ACPI Spec 6.5: 8.4.6.1.5
 /// | 0x00000010              | AutonomousActivityWindowRegister      | 32        | Read / Write | ACPI Spec 6.5: 8.4.6.1.6
-/// | 0x00000011              | EnergyPerformancePreferenceRegister   | 32        | Read / Write | ACPI Spec 6.5: 8.4.6.1.7  
-/// | 0x00000012              | ReferencePerformance                  | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.3  
+/// | 0x00000011              | EnergyPerformancePreferenceRegister   | 32        | Read / Write | ACPI Spec 6.5: 8.4.6.1.7
+/// | 0x00000012              | ReferencePerformance                  | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.3
 /// | 0x00000013              | LowestFrequency                       | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.7
 /// | 0x00000014              | NominalFrequency                      | 32        | Read-only    | ACPI Spec 6.5: 8.4.6.1.1.7
-/// | 0x00000015 - 0x7FFFFFFF |                                       |           |              | Reserved for future use.     
+/// | 0x00000015 - 0x7FFFFFFF |                                       |           |              | Reserved for future use.
 /// | 0x80000000              | TransitionLatency                     | 32        | Read-only    | Provides the maximum (worst-case) performance state transition latency in nanoseconds.
-/// | 0x80000001 - 0xFFFFFFFF |                                       |           |              | Reserved for future use.   
+/// | 0x80000001 - 0xFFFFFFFF |                                       |           |              | Reserved for future use.
 ///
 pub trait Cppc {
     /// Probe whether the CPPC register as specified by the `reg_id` parameter
@@ -57,7 +57,7 @@ pub trait Cppc {
     ///
     /// The possible return error codes returned in `SbiRet.error` are shown in the table below:
     ///
-    /// | Error code                | Description   
+    /// | Error code                | Description
     /// | ------------------------- | ---------------
     /// | `SbiRet::success()`       | Probe completed successfully.
     /// | `SbiRet::invalid_param()` | `reg_id` is reserved.
@@ -77,7 +77,7 @@ pub trait Cppc {
     /// | `SbiRet::success()`       | Read completed successfully.
     /// | `SbiRet::invalid_param()` | `reg_id` is reserved.
     /// | `SbiRet::not_supported()` | `reg_id` is not implemented by the platform.
-    /// | `SbiRet::denied()`        | `reg_id` is a write-only register.  
+    /// | `SbiRet::denied()`        | `reg_id` is a write-only register.
     /// | `SbiRet::failed()`        | The read request failed for unspecified or unknown other reasons.
     fn read(&self, reg_id: u32) -> SbiRet;
     /// Reads the upper 32-bit value of the register specified in the `reg_id`
@@ -95,7 +95,7 @@ pub trait Cppc {
     /// | `SbiRet::success()`       | Read completed successfully.
     /// | `SbiRet::invalid_param()` | `reg_id` is reserved.
     /// | `SbiRet::not_supported()` | `reg_id` is not implemented by the platform.
-    /// | `SbiRet::denied()`        | `reg_id` is a write-only register.  
+    /// | `SbiRet::denied()`        | `reg_id` is a write-only register.
     /// | `SbiRet::failed()`        | The read request failed for unspecified or unknown other reasons.
     fn read_hi(&self, reg_id: u32) -> SbiRet;
     /// Writes the value passed in the `val` parameter to the register as
@@ -105,11 +105,11 @@ pub trait Cppc {
     ///
     /// The possible return error codes returned in `SbiRet.error` are shown in the table below:
     ///
-    /// | Error code                | Description        
+    /// | Error code                | Description
     /// | ------------------------- | -------------------
-    /// | `SbiRet::success()`       | Write completed successfully.  
-    /// | `SbiRet::invalid_param()` | `reg_id` is reserved.       
-    /// | `SbiRet::not_supported()` | `reg_id` is not implemented by the platform.  
+    /// | `SbiRet::success()`       | Write completed successfully.
+    /// | `SbiRet::invalid_param()` | `reg_id` is reserved.
+    /// | `SbiRet::not_supported()` | `reg_id` is not implemented by the platform.
     /// | `SbiRet::denied()`        | `reg_id` is a read-only register.
     /// | `SbiRet::failed()`        | The write-request failed for unspecified or unknown other reasons.
     fn write(&self, reg_id: u32, val: u64) -> SbiRet;

@@ -37,14 +37,14 @@ fn primary_hart_main() {
 
 /// Simulates the main logic executed by a secondary hart.
 fn secondary_hart_main(hart_id: u128) {
-    println!("Secondary hart {} is waiting for interrupt", hart_id);
+    println!("Secondary hart {hart_id} is waiting for interrupt");
 
     // Simulate the "Wait For Interrupt" (WFI) operation.
     // In a real-world scenario, supervisor software might also use the SBI `hart_suspend` function instead.
     wfi();
 
     // If the secondary harts are woken up by the SBI `send_ipi` function, execution resumes here.
-    println!("Secondary hart {} received interrupt", hart_id);
+    println!("Secondary hart {hart_id} received interrupt");
 }
 
 /* -- Implementation of a mock SBI runtime -- */
@@ -69,7 +69,7 @@ mod sbi {
         for bit_offset in 0..128 {
             if (mask & (1 << bit_offset)) != 0 {
                 let hart_id = base + bit_offset;
-                println!("Hart id {}", hart_id);
+                println!("Hart id {hart_id}");
                 if hart_id < N_THREADS as u128 {
                     unpark_thread(hart_id);
                 }
@@ -85,8 +85,8 @@ fn emulation_init() {
     println!("Emulation start");
 
     // Spawn a thread for each secondary hart.
-    for i in 0..N_THREADS {
-        *THREADS[i].lock().unwrap() = Some(thread::spawn(move || secondary_hart_main(i as u128)));
+    for (i, thread) in THREADS.iter().enumerate() {
+        *thread.lock().unwrap() = Some(thread::spawn(move || secondary_hart_main(i as u128)));
     }
 
     // Add a short delay to ensure all threads are properly initialized before the primary hart starts.
@@ -106,7 +106,7 @@ fn emulation_finish() {
     // Iterate through all threads, stop them, and wait for their completion.
     for (i, thread) in THREADS.iter().enumerate() {
         if let Some(thread) = thread.lock().unwrap().take() {
-            println!("Hart {} stopped", i);
+            println!("Hart {i} stopped");
             thread.join().unwrap(); // Wait for the thread to finish execution.
         }
     }

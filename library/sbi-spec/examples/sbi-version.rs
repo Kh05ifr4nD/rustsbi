@@ -16,7 +16,7 @@ fn main() {
     let current_version = sbi::get_spec_version();
 
     // Print the detected SBI version.
-    println!("Kernel running on SBI version {}", current_version);
+    println!("Kernel running on SBI version {current_version}");
 
     // Version comparison: Check whether the current version meets the minimum
     // requirement (v1.0 or higher).

@@ -43,7 +43,7 @@ $ dd if=./visionfive2_fw_payload.img of=/dev/sda2 status=progress
 创建工作目录
 
 ``` shell
-$ mkdir workshop 
+$ mkdir workshop
 ```
 
 ### 下载 VisionFive2 Debian 镜像
@@ -90,8 +90,8 @@ $ make -j$(nproc)
 编译 RustSBI Prototyper，以 U-Boot 作为 Payload。
 
 ``` shell
-$ cd workshop/VisionFive2/rustsbi 
-$ cargo prototyper --payload ../work/u-boot/u-boot.bin --fdt ../work/u-boot/arch/riscv/dts/starfive_visionfive2.dtb 
+$ cd workshop/VisionFive2/rustsbi
+$ cargo prototyper --payload ../work/u-boot/u-boot.bin --fdt ../work/u-boot/arch/riscv/dts/starfive_visionfive2.dtb
 ```
 
 ## 生成 Payload 镜像

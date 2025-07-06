@@ -16,7 +16,7 @@ pub const HEAP_SIZE: usize = CONFIG.heap_size as usize;
 /// Platform page size.
 pub const PAGE_SIZE: usize = CONFIG.page_size as usize;
 /// Log Level.
-pub const LOG_LEVEL: &'static str = CONFIG.log_level;
+pub const LOG_LEVEL: &str = CONFIG.log_level;
 /// Address for jump mode.
 #[cfg(feature = "jump")]
 pub const JUMP_ADDRESS: usize = CONFIG.jump_address as usize;

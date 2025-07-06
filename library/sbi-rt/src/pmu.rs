@@ -40,7 +40,7 @@ pub fn pmu_num_counters() -> usize {
 ///
 /// Returns the `counter_info` described above in `SbiRet.value`.
 ///
-/// The possible return error codes returned in `SbiRet.error` are shown in the table below:    
+/// The possible return error codes returned in `SbiRet.error` are shown in the table below:
 ///
 /// | Return code               | Description
 /// |:--------------------------|:----------------------------------------------
@@ -95,7 +95,7 @@ pub fn pmu_counter_get_info(counter_idx: usize) -> SbiRet {
 ///
 /// Returns the `counter_idx` in `sbiret.value` upon success.
 ///
-/// In case of failure, the possible error codes returned in `sbiret.error` are shown in the table below:    
+/// In case of failure, the possible error codes returned in `sbiret.error` are shown in the table below:
 ///
 /// | Return code               | Description
 /// |:--------------------------|:----------------------------------------------
@@ -160,7 +160,7 @@ where
 ///
 /// # Return value
 ///
-/// The possible return error codes returned in `SbiRet.error` are shown in the table below:    
+/// The possible return error codes returned in `SbiRet.error` are shown in the table below:
 ///
 /// | Return code                 | Description
 /// |:----------------------------|:----------------------------------------------
@@ -213,7 +213,7 @@ where
 ///
 /// # Return value
 ///
-/// The possible return error codes returned in `SbiRet.error` are shown in the table below:    
+/// The possible return error codes returned in `SbiRet.error` are shown in the table below:
 ///
 /// | Return code                 | Description
 /// |:----------------------------|:----------------------------------------------
@@ -250,7 +250,7 @@ where
 ///
 /// # Return value
 ///
-/// The possible return error codes returned in `SbiRet.error` are shown in the table below:    
+/// The possible return error codes returned in `SbiRet.error` are shown in the table below:
 ///
 /// | Return code               | Description
 /// |:--------------------------|:----------------------------------------------

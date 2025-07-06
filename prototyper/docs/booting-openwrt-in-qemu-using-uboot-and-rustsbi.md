@@ -33,7 +33,7 @@ $ git clone https://github.com/u-boot/u-boot.git && cd u-boot && git checkout v2
 ### Clone & Patch Openwrt
 
 ``` shell
-$ git clone https://git.openwrt.org/openwrt/openwrt.git 
+$ git clone https://git.openwrt.org/openwrt/openwrt.git
 $ cd ./openwrt
 $ git checkout 603a3c6
 ```
@@ -72,7 +72,7 @@ $ cd u-boot
 ``` shell
 $ export ARCH=riscv
 $ export CROSS_COMPILE=riscv64-linux-gnu-
-$ export OPENSBI=../prototyper/target/riscv64imac-unknown-none-elf/release/rustsbi-prototyper.bin 
+$ export OPENSBI=../prototyper/target/riscv64imac-unknown-none-elf/release/rustsbi-prototyper.bin
 ```
 
 生成`.config`文件,编译U-Boot
@@ -110,9 +110,9 @@ $ make -j$(nproc) menuconfig
 $ make -j$(nproc) kernel_menuconfig
 ```
 
-进入后将   
-`Device Drivers` $\rightarrow$ `Serial ATA and Parallel ATA drivers (libata)` $\rightarrow$ `AHCI SATA support`  
-`Device Drivers` $\rightarrow$ `Network device support` $\rightarrow$ `Ethernet driver support` $\rightarrow$ `Intel devices` $\rightarrow$ `Intel(R) PRO/1000 Gigabit Ethernet support`  
+进入后将
+`Device Drivers` $\rightarrow$ `Serial ATA and Parallel ATA drivers (libata)` $\rightarrow$ `AHCI SATA support`
+`Device Drivers` $\rightarrow$ `Network device support` $\rightarrow$ `Ethernet driver support` $\rightarrow$ `Intel devices` $\rightarrow$ `Intel(R) PRO/1000 Gigabit Ethernet support`
 设为 `built-in`。
 
 编译镜像：

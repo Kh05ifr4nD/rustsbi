@@ -6,14 +6,14 @@ RustSBI Prototyper is a developing RISC-V Secure Bootloader solution. It can be 
 
 ### Basic Usage
 
-#### Required Dependencies:  
+#### Required Dependencies:
 
-Before compiling, ensure the following packages are installed:  
+Before compiling, ensure the following packages are installed:
 
 ```bash
 cargo install cargo-binutils
 sudo apt install u-boot-tools
-```  
+```
 
 These are necessary for building the firmware and handling RISC-V binary outputs.
 
@@ -31,71 +31,71 @@ These are necessary for building the firmware and handling RISC-V binary outputs
 
 #### Options
 
-- `-f, --features <FEATURES>`  
+- `-f, --features <FEATURES>`
   Enable specific features during the build (supports multiple values, e.g., `--features "hypervisor,feat2"`).
-- `--fdt <PATH>`  
-  Specify the path to a Flattened Device Tree (FDT) file.  
+- `--fdt <PATH>`
+  Specify the path to a Flattened Device Tree (FDT) file.
   [Environment Variable: `PROTOTYPER_FDT_PATH`]
-- `--payload <PATH>`  
-  Specify the path to the payload ELF file.  
+- `--payload <PATH>`
+  Specify the path to the payload ELF file.
   [Environment Variable: `PROTOTYPER_PAYLOAD_PATH`]
-- `--jump`  
+- `--jump`
   Enable jump mode.
-- `-c, --config-file <PATH>`  
+- `-c, --config-file <PATH>`
   Specify the path to a custom configuration file.
-- `-v, --verbose`  
+- `-v, --verbose`
   Increase logging verbosity (more detailed output).
-- `-q, --quiet`  
+- `-q, --quiet`
   Decrease logging verbosity (less output).
-- `-h, --help`  
+- `-h, --help`
   Display help information.
 
 > #### Note on FDT Files
-> 
+>
 > Regardless of the mode (Dynamic Firmware, Payload Firmware, or Jump Firmware), specifying an FDT file with `--fdt` ensures it is used to initialize the hardware platform configuration. The FDT file provides essential hardware setup details and overrides the bootloader's default settings.
 
 ### Firmware Compilation
 
 #### 1. Dynamic Firmware
 
-**Compilation Command:**  
+**Compilation Command:**
 Use this command to compile firmware that dynamically loads payloads:
 
 ```bash
 cargo prototyper
 ```
 
-**Output:**  
-Once compiled, the firmware files will be located in the `target/riscv64imac-unknown-none-elf/release/` directory under your project root:  
-- `rustsbi-prototyper-dynamic.elf` (ELF executable)  
+**Output:**
+Once compiled, the firmware files will be located in the `target/riscv64imac-unknown-none-elf/release/` directory under your project root:
+- `rustsbi-prototyper-dynamic.elf` (ELF executable)
 - `rustsbi-prototyper-dynamic.bin` (Binary file)
 
 #### 2. Payload Firmware
 
-**Compilation Command:**  
+**Compilation Command:**
 Build firmware with an embedded payload:
 
 ```bash
 cargo prototyper --payload <PAYLOAD_PATH>
 ```
 
-**Output:**  
-After compilation, the resulting firmware files are generated in the `target/riscv64imac-unknown-none-elf/release/` directory:  
-- `rustsbi-prototyper-payload.elf`  
+**Output:**
+After compilation, the resulting firmware files are generated in the `target/riscv64imac-unknown-none-elf/release/` directory:
+- `rustsbi-prototyper-payload.elf`
 - `rustsbi-prototyper-payload.bin`
 
 #### 3. Jump Firmware
 
-**Compilation Command:**  
+**Compilation Command:**
 Build firmware for jump mode:
 
 ```bash
 cargo prototyper --jump
 ```
 
-**Output:**  
-After compilation, the resulting firmware files are generated in the `target/riscv64imac-unknown-none-elf/release/` directory:  
-- `rustsbi-prototyper-jump.elf`  
+**Output:**
+After compilation, the resulting firmware files are generated in the `target/riscv64imac-unknown-none-elf/release/` directory:
+- `rustsbi-prototyper-jump.elf`
 - `rustsbi-prototyper-jump.bin`
 
 ### Configuration File

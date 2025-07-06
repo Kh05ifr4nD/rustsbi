@@ -118,15 +118,15 @@ pub fn get_inst(addr: usize) -> (usize, usize) {
 pub fn save_reg_x(ctx: &mut EntireContextSeparated, reg_id: usize, data: usize) {
     match reg_id {
         00 => (),
-        01 => ctx.regs().ra = data,
-        02 => sscratch::write(data),
-        03 => write_gp(data),
-        04 => write_tp(data),
-        05 => ctx.regs().t[0] = data,
-        06 => ctx.regs().t[1] = data,
-        07 => ctx.regs().t[2] = data,
-        08 => ctx.regs().s[0] = data,
-        09 => ctx.regs().s[1] = data,
+        1 => ctx.regs().ra = data,
+        2 => sscratch::write(data),
+        3 => write_gp(data),
+        4 => write_tp(data),
+        5 => ctx.regs().t[0] = data,
+        6 => ctx.regs().t[1] = data,
+        7 => ctx.regs().t[2] = data,
+        8 => ctx.regs().s[0] = data,
+        9 => ctx.regs().s[1] = data,
         // x10 = a0 ..= x17 = a7
         10..=17 => ctx.regs().a[reg_id - 10] = data,
         // x18 = s2 ..= x27 = s11
@@ -141,15 +141,15 @@ pub fn save_reg_x(ctx: &mut EntireContextSeparated, reg_id: usize, data: usize) 
 pub fn get_reg_x(ctx: &mut EntireContextSeparated, reg_id: usize) -> usize {
     match reg_id {
         00 => 0,
-        01 => ctx.regs().ra,
-        02 => sscratch::read(),
-        03 => read_gp(),
-        04 => read_tp(),
-        05 => ctx.regs().t[0],
-        06 => ctx.regs().t[1],
-        07 => ctx.regs().t[2],
-        08 => ctx.regs().s[0],
-        09 => ctx.regs().s[1],
+        1 => ctx.regs().ra,
+        2 => sscratch::read(),
+        3 => read_gp(),
+        4 => read_tp(),
+        5 => ctx.regs().t[0],
+        6 => ctx.regs().t[1],
+        7 => ctx.regs().t[2],
+        8 => ctx.regs().s[0],
+        9 => ctx.regs().s[1],
         // x10 = a0 ..= x17 = a7
         10..=17 => ctx.regs().a[reg_id - 10],
         // x18 = s2 ..= x27 = s11

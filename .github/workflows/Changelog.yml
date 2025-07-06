@@ -30,8 +30,8 @@ jobs:
           # 需要检查的目录数组
           directories=(
             "library/sbi-rt"
-            "library/sbi-spec" 
-            "library/sbi-testing" 
+            "library/sbi-spec"
+            "library/sbi-testing"
             "library/rustsbi"
             "library/macros"
           )

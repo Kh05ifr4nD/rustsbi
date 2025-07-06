@@ -108,7 +108,7 @@ unsafe extern "C" fn _start(hartid: usize, device_tree_paddr: usize) -> ! {
 
 #[unsafe(naked)]
 #[unsafe(no_mangle)]
-extern "C" fn init_hart(hartid: usize, opaque: usize) {
+unsafe extern "C" fn init_hart(hartid: usize, opaque: usize) {
     naked_asm!(
         "add sp, a1, zero",
         "csrw sscratch, sp",
@@ -119,7 +119,7 @@ extern "C" fn init_hart(hartid: usize, opaque: usize) {
 
 #[unsafe(naked)]
 #[unsafe(no_mangle)]
-extern "C" fn core_send_ipi(hartid: usize, opaque: usize) {
+unsafe extern "C" fn core_send_ipi(hartid: usize, opaque: usize) {
     naked_asm!(
         "add sp, a1, zero",
         "csrw sscratch, sp",

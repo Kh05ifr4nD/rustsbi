@@ -292,10 +292,8 @@ mod tests {
 
         // Test `for` loop on mask (`HartMask`) as `IntoIterator`.
         let mut ans = [0; 4];
-        let mut idx = 0;
-        for hart_id in mask {
+        for (idx, hart_id) in mask.into_iter().enumerate() {
             ans[idx] = hart_id;
-            idx += 1;
         }
         assert_eq!(ans, [1, 2, 4, 6]);
 
@@ -329,7 +327,7 @@ mod tests {
         let mut hart_ids = mask.iter();
         assert_eq!(hart_ids.nth(2), Some(4));
         let mut hart_ids = mask.iter();
-        assert_eq!(hart_ids.nth(0), Some(1));
+        assert_eq!(hart_ids.next(), Some(1));
 
         let mut iter = mask.iter().step_by(2);
         assert_eq!(iter.next(), Some(1));
@@ -367,11 +365,11 @@ mod tests {
 
         let mut channel_received = [0; 4];
         let mut idx = 0;
-        let mut channel_send = |hart_id| {
+        let channel_send = |hart_id| {
             channel_received[idx] = hart_id;
             idx += 1;
         };
-        mask.iter().for_each(|value| channel_send(value));
+        mask.iter().for_each(channel_send);
         assert_eq!(channel_received, [1, 2, 4, 6]);
 
         let is_in_cluster_1 = |hart_id: &usize| *hart_id >= 4 && *hart_id < 7;
@@ -381,7 +379,7 @@ mod tests {
         assert_eq!(iter.next(), None);
 
         let if_in_cluster_1_get_plic_context_id = |hart_id: usize| {
-            if hart_id >= 4 && hart_id < 7 {
+            if (4..7).contains(&hart_id) {
                 Some(hart_id * 2)
             } else {
                 None
@@ -399,10 +397,8 @@ mod tests {
         assert_eq!(iter.next(), Some((3, 6)));
         assert_eq!(iter.next(), None);
         let mut ans = [(0, 0); 4];
-        let mut idx = 0;
-        for (i, hart_id) in mask.iter().enumerate() {
+        for (idx, (i, hart_id)) in mask.iter().enumerate().enumerate() {
             ans[idx] = (i, hart_id);
-            idx += 1;
         }
         assert_eq!(ans, [(0, 1), (1, 2), (2, 4), (3, 6)]);
 
@@ -460,12 +456,8 @@ mod tests {
         let environment_available_hart_ids = 4..128;
         // `hart_mask_iter` contains 64..=usize::MAX.
         let hart_mask_iter = all_harts.iter().skip(64);
-        let filtered_iter = environment_available_hart_ids.filter(|&x| {
-            hart_mask_iter
-                .clone()
-                .find(|&y| y >= x)
-                .map_or(false, |y| y == x)
-        });
+        let filtered_iter = environment_available_hart_ids
+            .filter(|&x| hart_mask_iter.clone().find(|&y| y >= x) == Some(x));
         assert!(filtered_iter.eq(64..128));
 
         // The following operations should have O(1) complexity.
@@ -482,10 +474,10 @@ mod tests {
             let _ = ans.nth_back(4096 - 1);
             ans
         };
-        assert_eq!(partial_all_harts.clone().count(), usize::MAX - 65536 - 4096);
-        assert_eq!(partial_all_harts.clone().last(), Some(usize::MAX - 4096));
-        assert_eq!(partial_all_harts.clone().min(), Some(65536));
-        assert_eq!(partial_all_harts.clone().max(), Some(usize::MAX - 4096));
+        assert_eq!(partial_all_harts.count(), usize::MAX - 65536 - 4096);
+        assert_eq!(partial_all_harts.last(), Some(usize::MAX - 4096));
+        assert_eq!(partial_all_harts.min(), Some(65536));
+        assert_eq!(partial_all_harts.max(), Some(usize::MAX - 4096));
         assert!(partial_all_harts.is_sorted());
 
         let nothing = HartMask::from_mask_base(0, 1000);

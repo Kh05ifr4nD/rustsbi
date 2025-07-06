@@ -42,7 +42,7 @@ enum Cmd {
 fn main() -> ExitCode {
     let cli_args = Cli::parse();
     if let Err(e) = logger::Logger::init(&cli_args) {
-        eprintln!("Logger initialization failed: {}", e);
+        eprintln!("Logger initialization failed: {e}");
         return ExitCode::FAILURE;
     }
 
@@ -64,7 +64,7 @@ fn main() -> ExitCode {
                 Cmd::Test(_) => "test",
                 Cmd::Bench(_) => "bench",
             };
-            error!("Task '{}' failed with exit code: {}", cmd_name, exit_status);
+            error!("Task '{cmd_name}' failed with exit code: {exit_status}");
             ExitCode::FAILURE
         }
         None => {

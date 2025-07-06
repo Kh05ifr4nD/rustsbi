@@ -449,7 +449,7 @@ struct CounterInfo {
 impl CounterInfo {
     const CSR_MASK: usize = 0xFFF; // Bits [11:0]
     const WIDTH_MASK: usize = 0x3F << 12; // Bits [17:12]
-    const FIRMWARE_FLAG: usize = 1 << (size_of::<usize>() * 8 - 1); // MSB
+    const FIRMWARE_FLAG: usize = 1 << (usize::BITS as usize - 1); // MSB
 
     #[inline]
     pub const fn new(counter_info: usize) -> Self {

@@ -215,7 +215,7 @@ pub mod shmem_size {
 /// Find and configure a matching counter.
 /// Start a set of counters.
 /// Stop a set of counters.
-///  
+///
 /// Declared in §11.8, §11.9 and §11.10.
 pub mod flags {
     use bitflags::bitflags;

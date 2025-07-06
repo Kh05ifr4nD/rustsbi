@@ -59,7 +59,7 @@ fn priority_assign_multiple() {
     let sbi = AssignMultiple {
         aclint_1: Some(AclintOne::default()),
         aclint_2: Some(AclintTwo::default()),
-        aclint_3: Some(AclintThree::default()),
+        aclint_3: Some(AclintThree),
         env_info: DummyEnvInfo,
     };
     let sbi_ret = sbi.handle_ecall(EID_TIME, 0x0, [1, 0, 0, 0, 0, 0]);
@@ -72,7 +72,7 @@ fn priority_assign_multiple() {
     let sbi = AssignMultiple {
         aclint_1: None,
         aclint_2: Some(AclintTwo::default()),
-        aclint_3: Some(AclintThree::default()),
+        aclint_3: Some(AclintThree),
         env_info: DummyEnvInfo,
     };
     let sbi_ret = sbi.handle_ecall(EID_TIME, 0x0, [2, 0, 0, 0, 0, 0]);
@@ -84,7 +84,7 @@ fn priority_assign_multiple() {
     let sbi = AssignMultiple {
         aclint_1: None,
         aclint_2: None,
-        aclint_3: Some(AclintThree::default()),
+        aclint_3: Some(AclintThree),
         env_info: DummyEnvInfo,
     };
     let sbi_ret = sbi.handle_ecall(EID_TIME, 0x0, [3, 0, 0, 0, 0, 0]);

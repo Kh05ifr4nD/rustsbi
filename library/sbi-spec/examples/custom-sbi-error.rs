@@ -66,6 +66,6 @@ fn main() {
         Err(MyError::MyErrorCode1) => println!("Custom error code 1"),
         Err(MyError::MyErrorCode2) => println!("Custom error code 2"),
         // Handle wrapped standard SBI errors
-        Err(MyError::Standard(err)) => println!("Standard error: {:?}", err),
+        Err(MyError::Standard(err)) => println!("Standard error: {err:?}"),
     }
 }

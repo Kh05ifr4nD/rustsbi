@@ -1,7 +1,7 @@
 /*
  * Configuration to load RustSBI before RustSBI Test Kernel
  */
- 
+
 /dts-v1/;
 
 / {
@@ -41,4 +41,3 @@
 				};
 		};
 };
-

@@ -51,13 +51,13 @@ pub fn run(arg: &BenchArg) -> Option<ExitStatus> {
                 info!(
                     "Output image created at: {}",
                     target_dir
-                        .join(format!("{}.itb", BENCH_KERNEL_NAME))
+                        .join(format!("{BENCH_KERNEL_NAME}.itb"))
                         .display()
                 );
                 return Some(status);
             }
             Err(err_msg) => {
-                error!("{}", err_msg);
+                error!("{err_msg}");
                 return Some(<ExitStatus as std::os::unix::process::ExitStatusExt>::from_raw(1));
             }
         }
@@ -65,7 +65,7 @@ pub fn run(arg: &BenchArg) -> Option<ExitStatus> {
         info!(
             "Output binary created at: {}",
             target_dir
-                .join(format!("{}.bin", BENCH_KERNEL_NAME))
+                .join(format!("{BENCH_KERNEL_NAME}.bin"))
                 .display()
         );
     }
@@ -88,7 +88,7 @@ fn build_bench_kernel() -> Option<ExitStatus> {
 
 fn convert_to_binary(target_dir: &Path) -> Option<ExitStatus> {
     let kernel_path = target_dir.join(BENCH_KERNEL_NAME);
-    let bin_path = target_dir.join(format!("{}.bin", BENCH_KERNEL_NAME));
+    let bin_path = target_dir.join(format!("{BENCH_KERNEL_NAME}.bin"));
 
     Command::new("rust-objcopy")
         .args([
@@ -118,36 +118,36 @@ fn pack_image(current_dir: &Path, target_dir: &Path) -> Result<ExitStatus, Strin
         .join("prototyper")
         .join("bench-kernel")
         .join("scripts")
-        .join(format!("{}.its", BENCH_KERNEL_NAME));
+        .join(format!("{BENCH_KERNEL_NAME}.its"));
 
-    let its_dest = target_dir.join(format!("{}.its", BENCH_KERNEL_NAME));
+    let its_dest = target_dir.join(format!("{BENCH_KERNEL_NAME}.its"));
 
-    fs::copy(&its_source, &its_dest).map_err(|e| format!("Failed to copy ITS file: {}", e))?;
+    fs::copy(&its_source, &its_dest).map_err(|e| format!("Failed to copy ITS file: {e}"))?;
 
     // Change to target directory
     let original_dir =
-        env::current_dir().map_err(|e| format!("Failed to get current directory: {}", e))?;
+        env::current_dir().map_err(|e| format!("Failed to get current directory: {e}"))?;
 
     env::set_current_dir(target_dir)
-        .map_err(|e| format!("Failed to change directory to target: {}", e))?;
+        .map_err(|e| format!("Failed to change directory to target: {e}"))?;
 
     // Create image
     let status = Command::new("mkimage")
         .args([
             "-f",
-            &format!("{}.its", BENCH_KERNEL_NAME),
-            &format!("{}.itb", BENCH_KERNEL_NAME),
+            &format!("{BENCH_KERNEL_NAME}.its"),
+            &format!("{BENCH_KERNEL_NAME}.itb"),
         ])
         .status()
-        .map_err(|e| format!("Failed to execute mkimage command: {}", e))?;
+        .map_err(|e| format!("Failed to execute mkimage command: {e}"))?;
 
     // Clean up
-    fs::remove_file(format!("{}.its", BENCH_KERNEL_NAME))
-        .map_err(|e| format!("Failed to clean up ITS file: {}", e))?;
+    fs::remove_file(format!("{BENCH_KERNEL_NAME}.its"))
+        .map_err(|e| format!("Failed to clean up ITS file: {e}"))?;
 
     // Restore original directory
     env::set_current_dir(original_dir)
-        .map_err(|e| format!("Failed to restore original directory: {}", e))?;
+        .map_err(|e| format!("Failed to restore original directory: {e}"))?;
 
     Ok(status)
 }

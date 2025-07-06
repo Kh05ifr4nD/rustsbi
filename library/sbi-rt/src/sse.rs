@@ -115,7 +115,7 @@ pub fn sse_write_attrs(
 /// | `SbiRet::success()`         | Event handler is registered successfully.
 /// | `SbiRet::not_supported()`   | `event_id` is not reserved and valid, but the platform does not support it due to one or more missing dependencies (Hardware or SBI implementation).
 /// | `SbiRet::invalid_state()`   | `event_id` is valid but the event is not in `UNUSED` state.
-/// | `SbiRet::invalid_param()`   | `event_id` is invalid or `handler_entry_pc` is not 2-bytes aligned.    
+/// | `SbiRet::invalid_param()`   | `event_id` is invalid or `handler_entry_pc` is not 2-bytes aligned.
 #[doc(alias = "sbi_sse_register")]
 #[inline]
 pub fn sse_register(event_id: u32, handler_entry_pc: usize, handler_entry_arg: usize) -> SbiRet {

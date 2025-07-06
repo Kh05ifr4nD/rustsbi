@@ -14,7 +14,7 @@ Implementation status of the 3.0 specification by chapters:
 
 | # | Title | Support state |
 |:--|:------|:--------------|
-| §3 | Binary Encoding | Constants, Structures | 
+| §3 | Binary Encoding | Constants, Structures |
 | §4 | Base Extension | Constants |
 | §5 | Legacy Extensions | Constants |
 | §6 | Timer Extension | Constants |

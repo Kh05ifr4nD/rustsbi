@@ -196,7 +196,7 @@ mod tests {
         let vmax_max = Version::from_raw(0x7fff_ffff);
 
         assert!(v0_3 != v0_0);
-        assert!(!(v0_3 == v0_0));
+        assert!((v0_3 != v0_0));
         assert!(v0_0 == v0_0);
         assert!(vmax_max == vmax_max);
 

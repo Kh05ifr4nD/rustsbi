@@ -34,7 +34,7 @@ jobs:
           fi
 
           commits=$(git rev-list $RANGE)
-          
+
           if [ -z "$commits" ]; then
             echo "Error: No commits found in the pull request range."
             exit 1

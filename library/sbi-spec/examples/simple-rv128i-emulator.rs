@@ -65,18 +65,18 @@ fn main() {
             },
             // Any other exception is considered unexpected, so we print an error and terminate.
             Err(e) => {
-                println!("Emulation failed for unexpected exception: {:?}", e);
+                println!("Emulation failed for unexpected exception: {e:?}");
                 return;
             }
         }
     };
 
     // Print the final result of the emulation.
-    println!("Emulation finished. Result: {}", emulation_result);
+    println!("Emulation finished. Result: {emulation_result}");
     if emulation_result == 0 {
         println!("✓ Test success!");
     } else {
-        println!("✗ Test failed, emulator returns {}", emulation_result);
+        println!("✗ Test failed, emulator returns {emulation_result}");
     }
 }
 
@@ -150,7 +150,7 @@ fn handle_ecall(hart: &mut SimpleRv128IHart) -> ControlFlow<u128> {
     ];
     // Call the SBI handler with the extension and function numbers from registers A7 and A6.
     let ret = handle_sbi_call(hart.xregs[A7 as usize], hart.xregs[A6 as usize], param);
-    println!("SbiRet: {:?}", ret);
+    println!("SbiRet: {ret:?}");
     // If the SBI call returns the special error value (0x114514), signal shutdown.
     if ret.error == 0x114514 {
         return ControlFlow::Break(ret.value);
@@ -211,7 +211,7 @@ impl<const BASE: usize, const N_INSNS: usize> InstMemory<BASE, N_INSNS> {
     /// - `simm20`: The 20-bit immediate value.
     pub fn lui(&mut self, idx: usize, rd: XReg, simm20: impl Into<Simm20>) {
         let opcode = OPCODE_LUI;
-        let word = (u32::from(simm20.into().0) << 12) | ((rd as u32) << 7) | opcode;
+        let word = (simm20.into().0 << 12) | ((rd as u32) << 7) | opcode;
         self.inner[idx / 4] = word;
     }
 
@@ -285,6 +285,7 @@ impl<const BASE: usize, const N_INSNS: usize> InstMemory<BASE, N_INSNS> {
     /// # Parameters
     /// - `offset`: The byte offset at which to place the ecall instruction.
     pub fn ecall(&mut self, idx: usize) {
+        #[allow(clippy::unusual_byte_groupings)]
         let word = 0b000000000000_00000_000_00000_1110011;
         self.inner[idx / 4] = word;
     }
@@ -296,7 +297,7 @@ impl<const BASE: usize, const N_INSNS: usize> InstMemory<BASE, N_INSNS> {
     /// # Parameters
     /// - `ptr`: The 128-bit address from which to fetch the instruction.
     pub fn get(&mut self, ptr: u128) -> Option<u32> {
-        if ptr % 4 != 0 || ptr >= (BASE + 4 * N_INSNS) as u128 {
+        if !ptr.is_multiple_of(4) || ptr >= (BASE + 4 * N_INSNS) as u128 {
             return None;
         }
         Some(self.inner[(ptr as usize - BASE) / 4])
@@ -409,6 +410,7 @@ impl TryFrom<u32> for Instruction {
             let value = (offset4_1 << 1) | (offset10_5 << 5) | (offset11 << 11) | (offset12 << 12);
             value.into()
         };
+        #[allow(clippy::unusual_byte_groupings)]
         if opcode == OPCODE_OP_IMM && funct3 == FUNCT3_OP_ADD_SUB {
             Ok(Self::Addi(rd, rs1, simm12))
         } else if opcode == OPCODE_LUI {
@@ -538,7 +540,7 @@ impl From<i32> for Offset {
 
 impl From<u32> for Offset {
     fn from(mut value: u32) -> Self {
-        value = value & 0x1FFE;
+        value &= 0x1FFE;
         if value & 0x1000 != 0 {
             value |= 0xFFFFE000;
         }

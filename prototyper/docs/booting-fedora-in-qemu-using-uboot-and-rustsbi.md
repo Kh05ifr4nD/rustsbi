@@ -11,7 +11,7 @@
 |  RustSBI Prototyper   |  0.0.0  |
 |        U-Boot         | 2024.04 |
 
-## 准备RustSBI Prototyper， U-Boot ，Fedora 
+## 准备RustSBI Prototyper， U-Boot ，Fedora
 
 创建工作目录并进入该目录
 
@@ -67,7 +67,7 @@ $ cd u-boot
 ```shell
 $ export ARCH=riscv
 $ export CROSS_COMPILE=riscv64-linux-gnu-
-$ export OPENSBI=../prototyper/target/riscv64imac-unknown-none-elf/release/rustsbi-prototyper.bin 
+$ export OPENSBI=../prototyper/target/riscv64imac-unknown-none-elf/release/rustsbi-prototyper.bin
 ```
 
 生成`.config`文件,编译U-Boot

@@ -12,14 +12,14 @@ fn main() {
 }
 
 const LINKER_SCRIPT: &[u8] = b"OUTPUT_ARCH(riscv)
-ENTRY(_start) 
+ENTRY(_start)
 SECTIONS {
     . = 0x80000000;
 
     . = ALIGN(0x1000); /* Need this to create proper sections */
     sbi_start = .;
 
-    .text : ALIGN(0x1000) { 
+    .text : ALIGN(0x1000) {
         *(.text.entry)
         *(.text .text.*)
     }
@@ -27,11 +27,11 @@ SECTIONS {
     . = ALIGN(0x1000);
     sbi_rodata_start = .;
 
-    .rodata : ALIGN(0x1000) { 
+    .rodata : ALIGN(0x1000) {
         *(.rodata .rodata.*)
         *(.srodata .srodata.*)
-        . = ALIGN(0x1000);  
-    } 
+        . = ALIGN(0x1000);
+    }
 
     .dynsym : ALIGN(8) {
         *(.dynsym)
@@ -53,16 +53,16 @@ SECTIONS {
 	/* . = ALIGN(1 << LOG2CEIL((SIZEOF(.rodata) + SIZEOF(.text)
 				+ SIZEOF(.dynsym) + SIZEOF(.rela.dyn)))); */
 
-    .data : ALIGN(0x1000) { 
+    .data : ALIGN(0x1000) {
         sbi_data_start = .;
         *(.data .data.*)
         *(.sdata .sdata.*)
-        . = ALIGN(0x1000); 
+        . = ALIGN(0x1000);
         sbi_data_end = .;
     }
     sidata = LOADADDR(.data);
 
-    .bss (NOLOAD) : ALIGN(0x1000) {  
+    .bss (NOLOAD) : ALIGN(0x1000) {
         *(.bss.stack)
         sbi_heap_start = .;
         *(.bss.heap)
@@ -71,7 +71,7 @@ SECTIONS {
         *(.bss .bss.*)
         *(.sbss .sbss.*)
         sbi_bss_end = .;
-    } 
+    }
     /DISCARD/ : {
         *(.eh_frame)
     }

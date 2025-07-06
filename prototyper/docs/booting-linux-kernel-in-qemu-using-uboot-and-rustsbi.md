@@ -35,7 +35,7 @@ For Ubuntu:
 
 ``` shell
 $ sudo apt-get update && sudo apt-get upgrade
-$ sudo apt-get install git qemu-system-misc gcc-riscv64-linux-gnu 
+$ sudo apt-get install git qemu-system-misc gcc-riscv64-linux-gnu
 ```
 
 #### 测试是否成功安装
@@ -48,7 +48,7 @@ $ riscv64-linux-gnu-gcc --version
 
 它将输出以下版本信息
 
-``` 
+```
 riscv64-linux-gnu-gcc (GCC) 14.1.0
 Copyright (C) 2024 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -62,7 +62,7 @@ $ qemu-system-riscv64 --version
 
 它将输出以下版本信息
 
-``` 
+```
 QEMU emulator version 9.0.1
 Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
 ```
@@ -128,7 +128,7 @@ $ grep --color=always -ni 'riscv' .config
 
 观察到RISC-V 配置选项已启用
 
-``` 
+```
 CONFIG_RISCV=y
 ```
 
@@ -296,7 +296,7 @@ $ cd u-boot
 ``` shell
 $ export ARCH=riscv
 $ export CROSS_COMPILE=riscv64-linux-gnu-
-$ export OPENSBI=../prototyper/target/riscv64imac-unknown-none-elf/release/rustsbi-prototyper.bin 
+$ export OPENSBI=../prototyper/target/riscv64imac-unknown-none-elf/release/rustsbi-prototyper.bin
 ```
 
 生成`.config`文件
@@ -310,7 +310,7 @@ $ make menuconfig
 
 U-Boot 配置选项将加载到终端。导航到 `Boot options` $\rightarrow$ `bootcmd value` 并将以下内容写入 `bootcmd` 值：
 
-``` 
+```
 ext4load virtio 0:1 84000000 Image; setenv bootargs root=/dev/vda1 rw console=ttyS0; booti 0x84000000 - ${fdtcontroladdr}
 ```
 
@@ -340,4 +340,3 @@ $ qemu-system-riscv64 -M virt -smp 1 -m 256M -nographic \
           -blockdev driver=file,filename=./linux-rootfs.img,node-name=hd0 \
           -device virtio-blk-device,drive=hd0
 ```
-

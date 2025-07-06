@@ -126,7 +126,7 @@ fn build_prototyper(arg: &PrototyperArg) -> Option<ExitStatus> {
     // Get target directory once instead of recreating it
     let target_dir = prepare_directories()?.target_dir;
     let elf_path = target_dir.join(PACKAGE_NAME);
-    let bin_path = target_dir.join(format!("{}.bin", PACKAGE_NAME));
+    let bin_path = target_dir.join(format!("{PACKAGE_NAME}.bin"));
 
     // Create binary from ELF
     info!("Converting ELF to binary with rust-objcopy");
@@ -155,7 +155,7 @@ fn build_prototyper(arg: &PrototyperArg) -> Option<ExitStatus> {
     result
 }
 
-fn copy_output_files(target_dir: &PathBuf, arg: &PrototyperArg) -> Option<()> {
+fn copy_output_files(target_dir: &std::path::Path, arg: &PrototyperArg) -> Option<()> {
     let mode_suffix = if arg.payload.is_some() {
         info!("Copy for payload mode");
         "payload"
@@ -169,7 +169,7 @@ fn copy_output_files(target_dir: &PathBuf, arg: &PrototyperArg) -> Option<()> {
 
     // Copy ELF file
     let elf_source = target_dir.join(PACKAGE_NAME);
-    let elf_dest = target_dir.join(format!("{}-{}.elf", PACKAGE_NAME, mode_suffix));
+    let elf_dest = target_dir.join(format!("{PACKAGE_NAME}-{mode_suffix}.elf"));
     info!(
         "Copying ELF file: {} -> {}",
         elf_source.display(),
@@ -178,8 +178,8 @@ fn copy_output_files(target_dir: &PathBuf, arg: &PrototyperArg) -> Option<()> {
     fs::copy(&elf_source, &elf_dest).ok()?;
 
     // Copy binary file
-    let bin_source = target_dir.join(format!("{}.bin", PACKAGE_NAME));
-    let bin_dest = target_dir.join(format!("{}-{}.bin", PACKAGE_NAME, mode_suffix));
+    let bin_source = target_dir.join(format!("{PACKAGE_NAME}.bin"));
+    let bin_dest = target_dir.join(format!("{PACKAGE_NAME}-{mode_suffix}.bin"));
     info!(
         "Copying binary file: {} -> {}",
         bin_source.display(),
